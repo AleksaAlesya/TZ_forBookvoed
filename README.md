@@ -1,5 +1,5 @@
 # tz_for_bookvoed
-Тестовое задание
+###Тестовое задание
 Разработать небольшой веб-сервис с авторизацией и возможностью управления списком книг.
 
 1. Авторизация по логину и паролю (можно in-memory, без регистрации)
@@ -12,14 +12,14 @@
 Результат:
 
 БД разворачивается в контейнере Docker, запустить docker-compouse.yml
-jdbc:postgresql://localhost:5433/books-db
+- jdbc:postgresql://localhost:5433/books-db
 
-Администратор:
-Логин: admin
-Пароль: password
-Может создавать/редактировать/удалять книги
-http://localhost:8080/books/new
-http://localhost:8080/books/edit/1
+### Администратор:
+- Логин: admin
+- Пароль: password
+- Может создавать/редактировать/удалять книги
+- http://localhost:8080/books/new
+- http://localhost:8080/books/edit/1
 
 Не аутентифицированный пользователь:
 Может только просматривать книги
@@ -27,9 +27,9 @@ http://localhost:8080/books
 
 
 
-Запросы к REST API для тестирования доступ разрешен всем
-PUT: http://localhost:8080/api/books/{id}
-{
+### Запросы к REST API для тестирования доступ разрешен всем
+- PUT: http://localhost:8080/api/books/{id}
+- {
 "vendorCode": "NH-2542",
 "title": "Книга",
 "brand": "А.С. Пушкин",
@@ -38,11 +38,11 @@ PUT: http://localhost:8080/api/books/{id}
 "price": null
 }
 
-DELETE: http://localhost:8080/api/books/{id}
-GET: http://localhost:8080/api/books
-GET: http://localhost:8080/api/books/{id}
-POST: http://localhost:8080/api/books
-{
+- DELETE: http://localhost:8080/api/books/{id}
+- GET: http://localhost:8080/api/books
+- GET: http://localhost:8080/api/books/{id}
+- POST: http://localhost:8080/api/books
+- {
 "vendorCode": "NH-254",
 "title": "Книга",
 "brand": "А.С. Пушкин",
