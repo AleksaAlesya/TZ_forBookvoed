@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Book List</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-4">
+    <!-- Блок авторизации -->
+    <div class="d-flex justify-content-end mb-3">
+        <div sec:authorize="isAuthenticated()">
+            <span class="me-3">Logged in as: <strong th:text="${username}"></strong></span>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+            </form>
+        </div>
+        <div sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}" class="btn btn-outline-primary btn-sm">Login</a>
+        </div>
+    </div>
+
+    <h1>Book List</h1>
+
+    <!-- Фильтры -->
+    <form th:action="@{/books}" method="get" class="mb-4">
+        <div class="row g-3">
+            <div class="col-md-3">
+                <input type="text" name="title" th:value="${title}" class="form-control" placeholder="Title">
+            </div>
+            <div class="col-md-3">
+                <input type="text" name="brand" th:value="${brand}" class="form-control" placeholder="Brand">
+            </div>
+            <div class="col-md-3">
+                <input type="number" name="year" th:value="${year}" class="form-control" placeholder="Year">
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary">Filter</button>
+                <a th:href="@{/books}" class="btn btn-secondary">Reset</a>
+            </div>
+        </div>
+    </form>
+
+    <!-- Таблица книг -->
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Vendor Code</th>
+            <th>Title</th>
+            <th>Brand</th>
+            <th>Year</th>
+            <th>Stock</th>
+            <th>Price</th>
+            <th sec:authorize="isAuthenticated()">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.vendorCode}"></td>
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.brand}"></td>
+            <td th:text="${book.year}"></td>
+            <td th:text="${book.stock}"></td>
+            <td th:text="${#numbers.formatDecimal(book.price, 1, 2)}"></td>
+            <td sec:authorize="isAuthenticated()">
+                <a th:href="@{/books/edit/{id}(id=${book.id})}" class="btn btn-sm btn-primary">Edit</a>
+                <a th:href="@{/books/delete/{id}(id=${book.id})}" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Пагинация -->
+    <div th:if="${books.totalPages > 1}">
+        <ul class="pagination">
+            <li class="page-item" th:classappend="${books.first} ? 'disabled' : ''">
+                <a th:href="@{/books(title=${title}, brand=${brand}, year=${year}, page=${books.number-1}, size=${books.size})}"
+                   class="page-link">Previous</a>
+            </li>
+            <li th:each="i : ${#numbers.sequence(1, books.totalPages)}"
+                th:classappend="${i-1 == books.number} ? 'active' : ''" class="page-item">
+                <a th:href="@{/books(title=${title}, brand=${brand}, year=${year}, page=${i-1}, size=${books.size})}"
+                   th:text="${i}" class="page-link"></a>
+            </li>
+            <li class="page-item" th:classappend="${books.last} ? 'disabled' : ''">
+                <a th:href="@{/books(title=${title}, brand=${brand}, year=${year}, page=${books.number+1}, size=${books.size})}"
+                   class="page-link">Next</a>
+            </li>
+        </ul>
+    </div>
+
+    <div sec:authorize="isAuthenticated()">
+        <a th:href="@{/books/new}" class="btn btn-success">Add new Book</a>
+    </div>
+</div>
+</body>
+</html>

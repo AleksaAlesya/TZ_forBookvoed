@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${book.id != null} ? 'Edit Book' : 'Add Book'">Book Form</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-4">
+    <h1 th:text="${book.id != null} ? 'Edit Book' : 'Add Book'">Book Form</h1>
+
+    <!-- Форма с динамическим action -->
+    <form th:action="${book.id != null} ? @{/books/update/{id}(id=${book.id})} : @{/books/save}"
+          th:object="${book}" method="post">
+        <input type="hidden" th:field="*{id}">
+
+        <!-- Общие ошибки валидации -->
+        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+            <ul>
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+            </ul>
+        </div>
+
+        <div class="mb-3">
+            <label for="vendorCode" class="form-label">Vendor Code</label>
+            <input type="text" class="form-control" id="vendorCode" th:field="*{vendorCode}" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('vendorCode')}"
+                 th:errors="*{vendorCode}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" th:field="*{title}" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('title')}"
+                 th:errors="*{title}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="brand" class="form-label">Brand</label>
+            <input type="text" class="form-control" id="brand" th:field="*{brand}" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('brand')}"
+                 th:errors="*{brand}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="year" class="form-label">Year</label>
+            <input type="number" class="form-control" id="year" th:field="*{year}" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('year')}"
+                 th:errors="*{year}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="stock" class="form-label">Stock</label>
+            <input type="number" class="form-control" id="stock" th:field="*{stock}" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('stock')}"
+                 th:errors="*{stock}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" step="0.01" class="form-control" id="price" th:field="*{price}" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('price')}"
+                 th:errors="*{price}"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            <span th:text="${book.id != null} ? 'Update' : 'Save'"></span>
+        </button>
+        <a th:href="@{/books}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+</body>
+</html>
