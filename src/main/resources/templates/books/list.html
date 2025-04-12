@@ -64,8 +64,16 @@
             <td th:text="${book.stock}"></td>
             <td th:text="${#numbers.formatDecimal(book.price, 1, 2)}"></td>
             <td sec:authorize="isAuthenticated()">
-                <a th:href="@{/books/edit/{id}(id=${book.id})}" class="btn btn-sm btn-primary">Edit</a>
-                <a th:href="@{/books/delete/{id}(id=${book.id})}" class="btn btn-sm btn-danger">Delete</a>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <!-- Полноценные кнопки для ADMIN -->
+                    <a th:href="@{/books/edit/{id}(id=${book.id})}" class="btn btn-sm btn-primary">Edit</a>
+                    <a th:href="@{/books/delete/{id}(id=${book.id})}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+                <div sec:authorize="!hasRole('ADMIN')">
+                    <!-- Неактивные кнопки для других ролей -->
+                    <button class="btn btn-sm btn-secondary" disabled>Edit</button>
+                    <button class="btn btn-sm btn-secondary" disabled>Delete</button>
+                </div>
             </td>
         </tr>
         </tbody>
@@ -90,7 +98,7 @@
         </ul>
     </div>
 
-    <div sec:authorize="isAuthenticated()">
+    <div sec:authorize="hasAnyRole('ADMIN', 'USER')">
         <a th:href="@{/books/new}" class="btn btn-success">Add new Book</a>
     </div>
 </div>

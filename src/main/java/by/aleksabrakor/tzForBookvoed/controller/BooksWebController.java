@@ -51,7 +51,7 @@ public class BooksWebController {
     }
 
     @GetMapping("/new")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public String showCreateForm(Model model) {
 
         log.info("Запрос формы создания новой книги");
@@ -60,7 +60,7 @@ public class BooksWebController {
     }
 
     @PostMapping("/save")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public String saveBook(@ModelAttribute("book") @Valid BookDto bookDto,
                            BindingResult bindingResult) {
 
