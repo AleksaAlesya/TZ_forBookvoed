@@ -108,7 +108,7 @@ public class BooksWebController {
         return "redirect:/books";
     }
 
-    private boolean processBook(BookDto bookDto, BindingResult bindingResult){
+    public boolean processBook(BookDto bookDto, BindingResult bindingResult){
 
         log.info("Валидация ..");
         bookValidator.validate(bookDto, bindingResult);

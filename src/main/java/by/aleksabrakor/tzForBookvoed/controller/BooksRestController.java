@@ -52,7 +52,7 @@ public class BooksRestController {
     @DeleteMapping("/{id}")
 //    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteBook(@PathVariable Long id) {
-        log.info("ВУДУЕУ api/books//{id} — удаление книги по ID");
+        log.info("DELETE api/books//{id} — удаление книги по ID");
         bookService.deleteBook(id);
         return ResponseEntity.ok().build();
     }

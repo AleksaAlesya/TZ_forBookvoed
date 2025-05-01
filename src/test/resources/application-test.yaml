@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:15:///test_db
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+#настройка testContainer (postgres - тестово разворачивается в докере и удаляется после окончания тестов), заменяет класс PostgresContainer, который надо экстендить

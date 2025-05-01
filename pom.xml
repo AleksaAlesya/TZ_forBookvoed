@@ -105,6 +105,20 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>1.16.3</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>1.16.3</version>
+			<scope>test</scope>
+		</dependency>
+
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -113,6 +127,13 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>0.8.12</version>
 		</dependency>
 	</dependencies>
 
@@ -146,6 +167,28 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.12</version>
+				<configuration>
+					<rules>
+						<rule>
+							<element>BUNDLE</element>
+							<limits>
+								<limit>
+									<counter>LINE</counter>
+									<value>COVEREDRATIO</value>
+									<minimum>0.80</minimum>
+								</limit>
+							</limits>
+						</rule>
+					</rules>
+				</configuration>
+				<executions>
+					<!-- как выше -->
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
